@@ -1,0 +1,18 @@
+{
+  "name": "chrome-highlight-extension",
+  "version": "1.0.0",
+  "description": "Chrome Extension (Manifest V3) สำหรับ highlight คำที่กำหนดเองในทุกเว็บไซต์",
+  "main": "content.js",
+  "scripts": {
+    "test": "node test-anki.mjs && node test-highlight.mjs",
+    "test:anki": "node test-anki.mjs",
+    "test:highlight": "node test-highlight.mjs",
+    "shots": "node scripts/screenshot.mjs"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "playwright-core": "^1.64.1"
+  }
+}

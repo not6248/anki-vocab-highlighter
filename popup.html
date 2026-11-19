@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="th" data-theme="light">
+<head>
+<meta charset="utf-8" />
+<style>
+  :root {
+    --paper: #ffffff;
+    --wash: #f3f4f8;
+    --ink: #1e2430;
+    --muted: #5b6478;
+    --line: #e2e6f0;
+    --marker: #ffe14d;
+    --marker-edge: #eab308;
+    --pond: #2255cc;
+    --pond-ink: #ffffff;
+    --danger: #c2413a;
+    --radius: 10px;
+    --focus: #2255cc;
+  }
+  html[data-theme="dark"] {
+    --paper: #181c24;
+    --wash: #202634;
+    --ink: #e9ecf4;
+    --muted: #9aa3b8;
+    --line: #2c3547;
+    --marker: #ffe14d;
+    --marker-edge: #c9a400;
+    --pond: #7da2ff;
+    --pond-ink: #101828;
+    --danger: #f0877f;
+    --focus: #7da2ff;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    width: 372px;
+    font-family: system-ui, "Segoe UI", "Noto Sans Thai", sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    font-size: 13px;
+    line-height: 1.5;
+  }
+  header {
+    display: flex; align-items: center; gap: 10px;
+    padding: 12px 14px 10px;
+    border-bottom: 1px solid var(--line);
+  }
+  .swatch {
+    width: 22px; height: 14px; flex: none;
+    background: var(--marker);
+    border: 1px solid var(--marker-edge);
+    border-radius: 2px;
+    transform: rotate(-4deg);
+  }
+  header h1 { font-size: 15px; font-weight: 800; letter-spacing: -0.01em; margin: 0; flex: 1; }
+  .icon-btn {
+    border: 1px solid var(--line); background: var(--wash); color: var(--ink);
+    border-radius: 8px; padding: 4px 9px; font-size: 12px; cursor: pointer;
+  }
+  .icon-btn:hover { border-color: var(--muted); }
+  :focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+  nav.tabs {
+    display: flex; gap: 2px;
+    padding: 8px 10px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  nav.tabs button {
+    flex: 1; border: 0; background: none; color: var(--muted);
+    font-size: 13px; font-weight: 600; padding: 8px 4px 10px; cursor: pointer;
+    position: relative;
+  }
+  nav.tabs button[aria-selected="true"] { color: var(--ink); }
+  nav.tabs button[aria-selected="true"]::after {
+    content: ""; position: absolute; left: 22%; right: 22%; bottom: 5px; height: 5px;
+    background: var(--marker); border-radius: 2px; transform: rotate(-1.5deg);
+    border-bottom: 1px solid var(--marker-edge);
+  }
+  main { padding: 12px 14px 14px; }
+  section.panel { display: none; }
+  section.panel.active { display: block; }
+  p.hint { font-size: 12px; color: var(--muted); margin: 0 0 8px; }
+  p.tiny { font-size: 11px; color: var(--muted); margin: 8px 0 0; }
+  code { background: var(--wash); border: 1px solid var(--line); border-radius: 4px; padding: 0 4px; font-size: 11px; }
+  textarea {
+    width: 100%; height: 92px; resize: vertical;
+    border: 1px solid var(--line); border-radius: var(--radius);
+    background: var(--paper); color: var(--ink);
+    padding: 8px 10px; font-size: 13px; font-family: inherit;
+  }
+  input[type="text"], input[type="password"] {
+    width: 100%; border: 1px solid var(--line); border-radius: 8px;
+    background: var(--paper); color: var(--ink);
+    padding: 6px 8px; margin: 3px 0; font-size: 12px; font-family: inherit;
+  }
+  .row { display: flex; align-items: center; gap: 10px; margin: 10px 0; font-size: 13px; flex-wrap: wrap; }
+  .row label { display: inline-flex; align-items: center; gap: 6px; cursor: pointer; }
+  input[type="color"] { width: 40px; height: 24px; padding: 0; border: 1px solid var(--line); border-radius: 6px; background: var(--paper); }
+  input[type="checkbox"], input[type="radio"] {
+    appearance: none; -webkit-appearance: none;
+    width: 16px; height: 16px; flex: none; cursor: pointer;
+    border: 1.5px solid var(--line); background: var(--paper);
+    position: relative; margin: 0;
+  }
+  input[type="checkbox"] { border-radius: 5px; }
+  input[type="radio"] { border-radius: 50%; }
+  input[type="checkbox"]:checked { background: var(--marker); border-color: var(--marker-edge); }
+  input[type="checkbox"]:checked::after {
+    content: ""; position: absolute; left: 4px; top: 1px;
+    width: 4px; height: 8px;
+    border-right: 2px solid #1a1a1a; border-bottom: 2px solid #1a1a1a;
+    transform: rotate(45deg);
+  }
+  input[type="radio"]:checked { border-color: var(--marker-edge); }
+  input[type="radio"]:checked::after {
+    content: ""; position: absolute; inset: 3px; border-radius: 50%; background: var(--marker-edge);
+  }
+  fieldset { border: 0; border-top: 1px solid var(--line); margin: 14px 0 0; padding: 10px 0 0; }
+  fieldset legend { font-size: 12px; font-weight: 700; color: var(--muted); padding: 0 6px 0 0; }
+  .btn {
+    flex: 1; padding: 8px 10px; cursor: pointer; font-size: 13px; font-weight: 650;
+    border-radius: var(--radius); border: 1px solid var(--line);
+    background: var(--wash); color: var(--ink);
+  }
+  .btn.primary { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+  html[data-theme="dark"] .btn.primary { background: var(--marker); color: #1a1a1a; border-color: var(--marker); }
+  .btn:disabled { opacity: 0.6; cursor: wait; }
+  .btn.ghost { flex: none; }
+  .seg { display: flex; border: 1px solid var(--line); border-radius: 9px; overflow: hidden; }
+  .seg button { flex: 1; border: 0; background: var(--paper); color: var(--muted); font-size: 12px; font-weight: 600; padding: 7px 10px; cursor: pointer; }
+  .seg button[aria-pressed="true"] { background: var(--ink); color: var(--paper); }
+  html[data-theme="dark"] .seg button[aria-pressed="true"] { background: var(--marker); color: #1a1a1a; }
+  .switch { position: relative; display: inline-flex; align-items: center; gap: 8px; cursor: pointer; }
+  #count {
+    display: inline-block; font-size: 12px; color: var(--ink);
+    background: linear-gradient(transparent 55%, var(--marker) 55%, var(--marker) 92%, transparent 92%);
+    padding: 0 2px; margin-top: 6px; font-weight: 650;
+  }
+  #status { font-size: 12px; color: #0a7a2f; min-height: 16px; margin-top: 6px; }
+  html[data-theme="dark"] #status { color: #7ddf9a; }
+  #ankiStatus { font-size: 12px; color: var(--muted); min-height: 16px; margin-top: 6px; white-space: pre-line; }
+  .radio-row { display: flex; gap: 12px; font-size: 12px; margin: 6px 0; }
+  .mode-note { font-size: 12px; color: var(--muted); background: var(--wash); border: 1px solid var(--line); border-radius: 8px; padding: 8px 10px; margin: 8px 0; }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+</head>
+<body>
+  <header>
+    <span class="swatch" aria-hidden="true"></span>
+    <h1>Keyword Highlighter</h1>
+    <button id="themeQuick" class="icon-btn" type="button" title="สลับธีมสว่าง / มืด">ธีม: ระบบ</button>
+  </header>
+
+  <nav class="tabs" role="tablist" aria-label="ส่วนตั้งค่า">
+    <button role="tab" id="tabbtn-highlight" aria-selected="true" aria-controls="tab-highlight" data-tab="highlight" type="button">ไฮไลต์</button>
+    <button role="tab" id="tabbtn-style" aria-selected="false" aria-controls="tab-style" data-tab="style" type="button">ปรับแต่ง</button>
+    <button role="tab" id="tabbtn-system" aria-selected="false" aria-controls="tab-system" data-tab="system" type="button">ระบบ &amp; Anki</button>
+  </nav>
+
+  <main>
+    <!-- แท็บ 1: พื้นฐาน คงเดิม -->
+    <section class="panel active" id="tab-highlight" role="tabpanel" aria-labelledby="tabbtn-highlight" tabindex="0">
+      <p class="hint">ใส่คำคั่นด้วย comma หรือขึ้นบรรทัดใหม่<br />เช่น <code>xxx, yyy, zzz</code></p>
+      <textarea id="keywords" placeholder="xxx, yyy, zzz"></textarea>
+      <div><span id="count">ยังไม่มีคำ</span></div>
+      <div class="row">
+        <label><input type="checkbox" id="enabled" checked /> เปิดใช้งาน</label>
+        <label>พื้นหลัง <input type="color" id="color" value="#ffeb3b" /></label>
+      </div>
+      <div class="row">
+        <button id="save" class="btn primary" type="button">บันทึก &amp; Highlight</button>
+        <button id="clear" class="btn" type="button">ล้างคำ</button>
+      </div>
+      <div class="row">
+        <button id="highlightNow" class="btn" type="button">Highlight ตอนนี้</button>
+        <button id="clearPage" class="btn ghost" type="button" title="ล้างแถบสีในหน้าที่เปิดอยู่">ล้างสีในหน้า</button>
+      </div>
+      <div id="status" role="status"></div>
+    </section>
+
+    <!-- แท็บ 2: ขั้นสูง — การจับคู่ + ลักษณะ -->
+    <section class="panel" id="tab-style" role="tabpanel" aria-labelledby="tabbtn-style" data-tab="style" tabindex="0" hidden>
+      <fieldset>
+        <legend>การจับคู่คำ</legend>
+        <div class="row">
+          <label><input type="checkbox" id="caseSensitive" /> ตัวเล็ก/ใหญ่ตรงกัน</label>
+        </div>
+        <div class="row">
+          <label><input type="checkbox" id="wholeWord" checked /> จับทั้งคำเท่านั้น</label>
+        </div>
+        <div class="row">
+          <label><input type="checkbox" id="inflect" checked /> รวมรูปผัน (s/ed/ing/irregular)</label>
+        </div>
+        <p class="tiny">ปิดทั้งคำแล้วจับแบบ substring ได้ เหมาะกับภาษาไทยที่ไม่มีช่องว่าง</p>
+      </fieldset>
+      <fieldset>
+        <legend>ลักษณะแถบสี</legend>
+        <div class="row">
+          <label>สีตัวอักษร <input type="color" id="textColor" value="#000000" /></label>
+        </div>
+        <div class="row">
+          <label><input type="checkbox" id="bold" /> ตัวหนา</label>
+          <label><input type="checkbox" id="underline" /> ขีดเส้นใต้</label>
+        </div>
+        <p class="tiny">สีพื้นหลังตั้งได้ที่แท็บไฮไลต์</p>
+      </fieldset>
+    </section>
+
+    <!-- แท็บ 3: ขั้นสูง — พฤติกรรม + ธีม + Anki -->
+    <section class="panel" id="tab-system" role="tabpanel" aria-labelledby="tabbtn-system" tabindex="0" hidden>
+      <fieldset>
+        <legend>พฤติกรรม</legend>
+        <div class="row">
+          <label class="switch"><input type="checkbox" id="autoHighlight" checked /> ไฮไลต์อัตโนมัติ</label>
+        </div>
+        <div class="mode-note" id="autoNote">เปิด: highlight ทุกหน้า + เฝ้าหน้าเว็บที่โหลดเพิ่ม (เหมาะกับเว็บอ่านทั่วไป)<br />ปิด: กด “Highlight ตอนนี้” เอง ไม่แตะ DOM ขณะครอบข้อความหรือเลือกข้อความ</div>
+      </fieldset>
+      <fieldset>
+        <legend>ธีม popup</legend>
+        <div class="seg" role="group" aria-label="เลือกธีม">
+          <button type="button" data-theme-opt="light" aria-pressed="false">สว่าง</button>
+          <button type="button" data-theme-opt="system" aria-pressed="true">ระบบ</button>
+          <button type="button" data-theme-opt="dark" aria-pressed="false">มืด</button>
+        </div>
+      </fieldset>
+      <fieldset>
+        <legend>Anki Sync (Anki-Connect)</legend>
+        <p class="hint">ดึงคำจาก Anki มาเป็น keywords — เปิด Anki ทิ้งไว้ก่อนกด Sync</p>
+        <input type="text" id="ankiUrl" placeholder="http://127.0.0.1:8765" />
+        <input type="password" id="ankiKey" placeholder="API key (ถ้ามี, ไม่มีเว้นว่าง)" />
+        <input type="text" id="ankiDeck" placeholder="Deck เช่น Default (ว่าง = ทุก deck, * = ทุก deck)" />
+        <input type="text" id="ankiField" placeholder="Field เช่น Word (ว่าง = เดาฟิลด์คำ, * = ทุกฟิลด์)" />
+        <div class="radio-row">
+          <label><input type="radio" name="ankiMode" value="all" /> ทุกคำ</label>
+          <label><input type="radio" name="ankiMode" value="learned" checked /> เคยเรียนแล้ว</label>
+        </div>
+        <div class="row">
+          <button id="syncAnki" type="button" class="btn">Sync Anki</button>
+          <button id="testAnki" type="button" class="btn">ทดสอบเชื่อมต่อ</button>
+        </div>
+        <div id="ankiStatus"></div>
+        <p class="tiny">เคยเรียนแล้ว = ไพ่ที่ไม่ใช่ new (-is:new). ถ้า Sync ไม่ติด: เช็ค Anki เปิดอยู่, approve popup ใน Anki, ใส่ origin ของ extension ใน webCorsOriginList</p>
+      </fieldset>
+    </section>
+  </main>
+
+  <script src="anki.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>
