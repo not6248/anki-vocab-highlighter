@@ -16,6 +16,7 @@ const browser = await chromium.launch({ executablePath: EXE, headless: true });
 
 async function shot(name, { settings = {}, tab = "highlight", theme = "light" }) {
   const page = await browser.newPage({ viewport: { width: 372, height: 620 }, deviceScaleFactor: 2 });
+  settings = { theme, ...settings };
   await page.addInitScript(
     ({ settings }) => {
       const sync = {
@@ -61,10 +62,6 @@ async function shot(name, { settings = {}, tab = "highlight", theme = "light" })
   await page.addInitScript((t) => localStorage.setItem("ce-tab", t), tab);
   await page.goto(pathToFileURL(path.join(root, "popup.html")).href, { waitUntil: "load" });
   await page.waitForTimeout(150);
-  if (theme === "dark") {
-    await page.click('[data-theme-opt="dark"]');
-    await page.waitForTimeout(100);
-  }
   const height = await page.evaluate(() => document.body.scrollHeight);
   await page.setViewportSize({ width: 372, height });
   await page.screenshot({ path: path.join(outDir, name), fullPage: true });
@@ -73,6 +70,7 @@ async function shot(name, { settings = {}, tab = "highlight", theme = "light" })
 }
 
 await shot("popup-light.png", { tab: "highlight", theme: "light" });
-await shot("popup-dark.png", { tab: "system", theme: "dark", settings: { autoHighlight: false, theme: "dark" } });
+await shot("popup-dark.png", { tab: "highlight", theme: "dark", settings: { theme: "dark" } });
 await shot("popup-style.png", { tab: "style", theme: "light" });
+await shot("popup-system.png", { tab: "system", theme: "dark", settings: { autoHighlight: false, theme: "dark" } });
 await browser.close();
