@@ -27,6 +27,7 @@
 - **Sync จาก Anki** — ดึงคำจาก deck ที่เลือกผ่าน Anki-Connect
 - **Light / Dark / ตามระบบ** — จำธีมที่เลือกไว้
 - **โหมด manual** — หยุด Observer ทั้งหมด กดปุ่มเองเมื่อพร้อม เลือกข้อความได้ไม่หลุด
+- **ปุ่มลัดตั้งเองได้** — กด `Alt + Shift + H` เพื่อ highlight ทันที หรือเปลี่ยนเป็นปุ่มที่ถนัด
 
 <div align="center">
 <table>
@@ -84,6 +85,16 @@
 
 เมื่ออยู่ในโหมด manual ใช้ปุ่ม **Highlight ตอนนี้** บนแท็บแรก (ปุ่มนี้จะบันทึกค่าล่าสุดให้ก่อนเสมอ)
 
+## ปุ่มลัด
+
+ค่าเริ่มต้นคือ **`Alt + Shift + H`** ใช้ได้ทันทีบนหน้าเว็บ โดยไม่ต้องเปิด popup
+
+เปลี่ยนปุ่มได้ที่แท็บ **ไฮไลต์** → กด **เปลี่ยน** ข้างปุ่มลัด แล้วกดชุดปุ่มที่ต้องการ
+
+- ต้องมี `Ctrl`, `Alt` หรือ `Meta` (Shift ใส่หรือไม่ก็ได้)
+- `Backspace` ล้างปุ่มลัด, `Esc` ยกเลิก
+- ปุ่มจะทำงานเมื่อโฟกัสอยู่บนหน้าเว็บ และใช้ค่าล่าสุดที่บันทึกไว้
+
 ## Sync Anki
 
 1. เปิด Anki ค้างไว้
@@ -122,6 +133,7 @@ chrome-highlight-extension/
 ├── popup.js             # โหลด/บันทึกค่า, สลับแท็บ, sync Anki
 ├── content.js           # เดิน text node, highlight, observer, manual mode
 ├── content.css          # สไตล์ของ span.ce-highlight
+├── shortcut.js          # parse/เทียบปุ่มลัดที่ผู้ใช้ตั้งเอง
 ├── highlight.js         # parse keywords, ขยายรูปผัน, สร้าง trie regex
 ├── anki.js              # Anki-Connect client + storage helper
 ├── test-*.mjs           # unit + browser tests
@@ -157,6 +169,7 @@ npm run shots      # สร้างภาพ popup ใหม่ลง docs/
 | Sync ไม่ติด | เปิด Anki, เช็ค Anki-Connect, approve popup ใน Anki, ใส่ origin ใน `webCorsOriginList` |
 | คำภาษาไทยไม่โดน | ปิด **จับทั้งคำเท่านั้น** เพื่อจับแบบ substring |
 | เปลี่ยนสีแล้วไม่เห็นผล | โหมด manual ต้องกด **Highlight ตอนนี้** |
+| ปุ่มลัดไม่ทำงาน | เช็คว่าโฟกัสอยู่บนหน้าเว็บ ไม่ใช่ในช่อง address bar และปุ่มไม่ชนกับ shortcut ของ Chrome |
 
 ## License
 

@@ -157,6 +157,7 @@ function memStore(initial = {}) {
   assert.equal(st.bold, false);
   assert.equal(st.autoHighlight, true, "auto-highlight default on");
   assert.equal(st.theme, "system", "theme default follows system");
+  assert.equal(st.shortcut, "Alt+Shift+H", "shortcut default");
 }
 {
   // legacy: keywords stuck in sync → migrated to local
@@ -183,9 +184,10 @@ function memStore(initial = {}) {
 {
   // manual mode + theme settings round-trip through sync storage
   const s = { local: memStore(), sync: memStore() };
-  await AnkiSync.saveSettings(s, { autoHighlight: false, theme: "dark" });
+  await AnkiSync.saveSettings(s, { autoHighlight: false, theme: "dark", shortcut: "Ctrl+Shift+K" });
   const st = await AnkiSync.loadState(s);
   assert.equal(st.autoHighlight, false);
   assert.equal(st.theme, "dark");
+  assert.equal(st.shortcut, "Ctrl+Shift+K");
 }
 console.log("PASS: storage split (local keywords + migration)");

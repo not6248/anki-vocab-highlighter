@@ -4,8 +4,9 @@
   "description": "Chrome Extension (Manifest V3) สำหรับ highlight คำที่กำหนดเองในทุกเว็บไซต์",
   "main": "content.js",
   "scripts": {
-    "test": "node test-anki.mjs && node test-highlight.mjs",
+    "test": "node test-anki.mjs && node test-shortcut.mjs && node test-highlight.mjs",
     "test:anki": "node test-anki.mjs",
+    "test:shortcut": "node test-shortcut.mjs",
     "test:highlight": "node test-highlight.mjs",
     "shots": "node scripts/screenshot.mjs"
   },

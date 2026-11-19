@@ -6,6 +6,7 @@
   const DEFAULT_COLOR = "#ffeb3b";
 
   const HL = typeof Highlight !== "undefined" ? Highlight : null;
+  const SC = typeof Shortcut !== "undefined" ? Shortcut : null;
 
   let current = {
     keywords: [],
@@ -18,6 +19,7 @@
     inflect: true,
     enabled: true,
     autoHighlight: true,
+    shortcut: SC ? SC.DEFAULT : "Alt+Shift+H",
   };
   let debounceTimer = 0;
   let observer = null;
@@ -201,9 +203,10 @@
         inflect: data.inflect !== false,
         enabled: data.enabled !== false,
         autoHighlight: data.autoHighlight !== false,
+        shortcut: data.shortcut != null ? data.shortcut : SC ? SC.DEFAULT : "",
       };
     } catch {
-      current = { keywords: [], color: DEFAULT_COLOR, textColor: "#000000", bold: false, underline: false, caseSensitive: false, wholeWord: true, inflect: true, enabled: true, autoHighlight: true };
+      current = { keywords: [], color: DEFAULT_COLOR, textColor: "#000000", bold: false, underline: false, caseSensitive: false, wholeWord: true, inflect: true, enabled: true, autoHighlight: true, shortcut: SC ? SC.DEFAULT : "" };
     }
     ensureObserver();
     // โหมด manual สมบูรณ์: ไม่ apply อัตโนมัติเลย ยกเว้นกดปุ่ม (reason === "manual")
@@ -233,10 +236,11 @@
       if (changes.inflect) current.inflect = changes.inflect.newValue !== false;
       if (changes.enabled) current.enabled = changes.enabled.newValue !== false;
       if (changes.autoHighlight) current.autoHighlight = changes.autoHighlight.newValue !== false;
+      if (changes.shortcut) current.shortcut = changes.shortcut.newValue || "";
     }
     ensureObserver();
-    // เปลี่ยนแค่ธีม/ค่า Anki ไม่ต้อง rebuild DOM ทั้งหน้า
-    const relevant = Object.keys(changes).some((k) => k !== "theme" && !k.startsWith("anki"));
+    // เปลี่ยนแค่ธีม/ค่า Anki/ปุ่มลัด ไม่ต้อง rebuild DOM ทั้งหน้า
+    const relevant = Object.keys(changes).some((k) => k !== "theme" && k !== "shortcut" && !k.startsWith("anki"));
     if (!relevant) return;
     // โหมด manual: เปลี่ยนค่าอะไรก็ไม่ apply เอง ยกเว้นกดปิดใช้งาน → ล้างทันที
     if (!current.autoHighlight) {
@@ -254,6 +258,20 @@
       clearHighlights();
     }
   });
+
+  // ปุ่มลัดที่ผู้ใช้ตั้งเอง — ทำงานเฉพาะตอนโฟกัสอยู่บนหน้าเว็บ
+  window.addEventListener(
+    "keydown",
+    (e) => {
+      if (!SC || e.repeat || e.isComposing) return;
+      if (!current.shortcut) return;
+      if (!SC.matches(e, current.shortcut)) return;
+      e.preventDefault();
+      e.stopPropagation();
+      reloadSettings("manual");
+    },
+    true,
+  );
 
   // รองรับเว็บโหลดเนื้อหาเพิ่มทีหลัง (infinite scroll / SPA) — เฉพาะโหมด auto
   // observer ถูกสร้าง/ตัดผ่าน ensureObserver() ตามค่า autoHighlight + enabled

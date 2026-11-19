@@ -127,6 +127,20 @@
   html[data-theme="dark"] .btn.primary { background: var(--marker); color: #1a1a1a; border-color: var(--marker); }
   .btn:disabled { opacity: 0.6; cursor: wait; }
   .btn.ghost { flex: none; }
+  .shortcut-row { display: flex; align-items: center; gap: 8px; margin-top: 10px; font-size: 12px; }
+  .shortcut-label { color: var(--muted); }
+  kbd {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 11px; color: var(--ink);
+    background: var(--wash); border: 1px solid var(--line); border-bottom-width: 2px;
+    border-radius: 5px; padding: 1px 6px;
+  }
+  kbd.recording { background: var(--marker); color: var(--marker-ink); border-color: var(--marker-edge); }
+  .linkbtn {
+    border: 0; background: none; padding: 0; font: inherit; font-size: 12px;
+    color: var(--pond); text-decoration: underline; cursor: pointer; flex: none;
+  }
+  html[data-theme="dark"] .linkbtn { color: var(--pond); }
   .seg { display: flex; border: 1px solid var(--line); border-radius: 9px; overflow: hidden; }
   .seg button { flex: 1; border: 0; background: var(--paper); color: var(--muted); font-size: 12px; font-weight: 600; padding: 7px 10px; cursor: pointer; }
   .seg button[aria-pressed="true"] { background: var(--ink); color: var(--paper); }
@@ -177,6 +191,12 @@
         <button id="highlightNow" class="btn" type="button">Highlight ตอนนี้</button>
         <button id="clearPage" class="btn ghost" type="button" title="ล้างแถบสีในหน้าที่เปิดอยู่">ล้างสีในหน้า</button>
       </div>
+      <div class="shortcut-row">
+        <span class="shortcut-label">ปุ่มลัด</span>
+        <kbd id="shortcutKeys">Alt + Shift + H</kbd>
+        <button id="editShortcut" class="linkbtn" type="button">เปลี่ยน</button>
+      </div>
+      <p class="tiny" id="shortcutHint">กดปุ่มนี้บนหน้าเว็บเพื่อ highlight ทันที ไม่ต้องเปิด popup</p>
       <div id="status" role="status"></div>
     </section>
 
@@ -246,6 +266,7 @@
     </section>
   </main>
 
+  <script src="shortcut.js"></script>
   <script src="anki.js"></script>
   <script src="popup.js"></script>
 </body>

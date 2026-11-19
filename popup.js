@@ -12,6 +12,7 @@ const DEFAULTS = {
   enabled: true,
   autoHighlight: true,
   theme: "system",
+  shortcut: "Alt+Shift+H",
   ankiUrl: "http://127.0.0.1:8765",
   ankiKey: "",
   ankiDeck: "",
@@ -21,6 +22,8 @@ const DEFAULTS = {
 
 let cachedAuto = true;
 let currentTheme = "system";
+let currentShortcut = Shortcut.DEFAULT;
+let recordingShortcut = false;
 const mediaDark = window.matchMedia ? window.matchMedia("(prefers-color-scheme: dark)") : null;
 
 function getAnkiMode() {
@@ -83,12 +86,14 @@ async function load() {
   $("autoHighlight").checked = data.autoHighlight !== false;
   cachedAuto = $("autoHighlight").checked;
   currentTheme = data.theme || "system";
+  currentShortcut = data.shortcut != null ? data.shortcut : Shortcut.DEFAULT;
   $("ankiUrl").value = data.ankiUrl || DEFAULTS.ankiUrl;
   $("ankiKey").value = data.ankiKey || "";
   $("ankiDeck").value = data.ankiDeck || "";
   $("ankiField").value = data.ankiField || "";
   setAnkiMode(data.ankiMode || "learned");
   updateCount(data.keywords);
+  renderShortcut();
   applyTheme();
   let initial = "highlight";
   try {
@@ -174,6 +179,66 @@ $("highlightNow").addEventListener("click", async () => {
 $("clearPage").addEventListener("click", async () => {
   await notifyTabs("CE_CLEAR");
 });
+
+// --- ปุ่มลัด: กดเปลี่ยนแล้วบันทึกปุ่มที่กดใน popup ---
+function renderShortcut() {
+  $("shortcutKeys").textContent = currentShortcut ? Shortcut.format(currentShortcut) : "ยังไม่ได้ตั้ง";
+}
+
+function setRecording(on) {
+  recordingShortcut = on;
+  const kbd = $("shortcutKeys");
+  kbd.classList.toggle("recording", on);
+  $("editShortcut").textContent = on ? "ยกเลิก" : "เปลี่ยน";
+  if (on) {
+    kbd.textContent = "กดปุ่มลัด…";
+    $("shortcutHint").textContent = "ต้องมี Ctrl, Alt หรือ Meta · Backspace ล้าง · Esc ยกเลิก";
+  } else {
+    renderShortcut();
+    $("shortcutHint").textContent = "กดปุ่มนี้บนหน้าเว็บเพื่อ highlight ทันที ไม่ต้องเปิด popup";
+  }
+}
+
+async function saveShortcut(combo) {
+  currentShortcut = combo;
+  await AnkiSync.saveSettings(chrome.storage, { shortcut: combo });
+  setRecording(false);
+  $("shortcutHint").textContent = combo
+    ? `บันทึกแล้ว: กด ${Shortcut.format(combo)} บนหน้าเว็บเพื่อ highlight`
+    : "ล้างปุ่มลัดแล้ว";
+}
+
+$("editShortcut").addEventListener("click", () => setRecording(!recordingShortcut));
+
+document.addEventListener(
+  "keydown",
+  async (e) => {
+    if (!recordingShortcut) return;
+    if (e.key === "Escape") {
+      e.preventDefault();
+      setRecording(false);
+      return;
+    }
+    if (e.key === "Tab") {
+      setRecording(false);
+      return; // ปล่อยให้ Tab ย้ายโฟกัสตามปกติ
+    }
+    e.preventDefault();
+    e.stopPropagation();
+    if (Shortcut.isModifierKey(e)) return;
+    if (!e.ctrlKey && !e.altKey && !e.metaKey && (e.key === "Backspace" || e.key === "Delete")) {
+      await saveShortcut("");
+      return;
+    }
+    const combo = Shortcut.fromEvent(e);
+    if (!combo || !Shortcut.hasRequiredModifier(combo)) {
+      $("shortcutHint").textContent = "ต้องมี Ctrl, Alt หรือ Meta · Esc ยกเลิก";
+      return;
+    }
+    await saveShortcut(combo);
+  },
+  true,
+);
 
 $("clear").addEventListener("click", async () => {
   $("keywords").value = "";
