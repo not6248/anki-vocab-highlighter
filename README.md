@@ -1,176 +1,274 @@
 <div align="center">
 
-# Keyword Highlighter
-
-**ไฮไลต์คำที่กำลังเรียน ตรงบนหน้าที่คุณอ่าน**
-
-ส่วนขยาย Chrome สำหรับคนเรียนภาษา นักอ่าน และสาย Anki<br />
-ปรับสีได้ตามใจ แยกโหมดอัตโนมัติกับ manual และมี dark mode ในตัว
-
-[![Manifest V3](https://img.shields.io/badge/Manifest-V3-1e2430?style=flat-square)](https://developer.chrome.com/docs/extensions/develop/migrate/what-is-mv3)
-[![Chrome](https://img.shields.io/badge/Chrome-Extension-ffe14d?style=flat-square&labelColor=1e2430)](https://www.google.com/chrome/)
-[![Anki-Connect](https://img.shields.io/badge/Anki--Connect-supported-2255cc?style=flat-square)](https://foosoft.net/projects/anki-connect/)
-[![License](https://img.shields.io/badge/License-ISC-5b6478?style=flat-square)](LICENSE)
-
-<img src="docs/popup-light.png" width="320" alt="หน้าตา popup แท็บไฮไลต์ โหมดสว่าง" />
+**🌐 Language:** [English](README.md) | [ไทย](README.th.md)
 
 </div>
 
 ---
 
-## ทำอะไรได้บ้าง
-
-- **ไฮไลต์ทุกเว็บ** — ใส่คำครั้งเดียว ใช้ได้ทุกแท็บที่เปิด
-- **จับรูปผันอัตโนมัติ** — `cry` โดนทั้ง `cries`, `cried`, `crying`; `go` โดน `went`; `leaf` โดน `leaves`
-- **จับทั้งคำแบบ Unicode** — `tall` ไม่ไปโดนใน `Installation` หรือ `taller` (ปิดได้ถ้าอยากจับ substring เช่นภาษาไทย)
-- **คำยาวชนะคำสั้น** — `error code` ถูกจับก่อน `error`
-- **Sync จาก Anki** — ดึงคำจาก deck ที่เลือกผ่าน Anki-Connect
-- **Light / Dark / ตามระบบ** — จำธีมที่เลือกไว้
-- **โหมด manual** — หยุด Observer ทั้งหมด กดปุ่มเองเมื่อพร้อม เลือกข้อความได้ไม่หลุด
-- **ปุ่มลัดตั้งเองได้** — กด `Alt + Shift + H` เพื่อ highlight ทันที หรือเปลี่ยนเป็นปุ่มที่ถนัด
-
 <div align="center">
-<table>
-<tr>
-<td align="center"><img src="docs/popup-dark.png" width="300" alt="โหมดมืด แท็บระบบและ Anki" /></td>
-<td align="center"><img src="docs/popup-style.png" width="300" alt="แท็บปรับแต่งการจับคู่และสี" /></td>
-</tr>
-<tr>
-<td align="center"><sub>โหมดมืด พร้อมสวิตช์ auto/manual</sub></td>
-<td align="center"><sub>แท็บปรับแต่ง: การจับคู่และลักษณะแถบสี</sub></td>
-</tr>
-</table>
+
+# Keyword Highlighter
+
+**Highlight the words you're learning, right on the page you read.**
+
+A Chrome extension for language learners, readers, and Anki users.<br />
+Customizable colors, auto vs. manual modes, and built-in dark mode.
+
+[![Manifest V3](https://img.shields.io/badge/Manifest-V3-1e2430?style=flat-square)](https://developer.chrome.com/docs/extensions/develop/migrate/what-is-mv3)
+[![Chrome](https://img.shields.io/badge/Chrome-Extension-ffe14d?style=flat-square&labelColor=1e2430)](https://www.google.com/chrome/)
+[![Anki-Connect](https://img.shields.io/badge/Anki--Connect-supported-2255cc?style=flat-square)](https://foosoft.net/projects/anki-connect)
+[![License](https://img.shields.io/badge/License-ISC-5b6478?style=flat-square)](LICENSE)
+
+<img src="docs/highlight-demo.png" width="720" alt="Keyword highlighting on a real web page" />
+
+<sub>Type a word once — <code>run</code> matches <code>running</code>, <code>cry</code> matches <code>cries / cried</code>, <code>error code</code> wins over bare <code>error</code></sub>
+
 </div>
 
-## ติดตั้ง
+---
 
-1. เปิด `chrome://extensions`
-2. เปิด **Developer mode** ที่มุมขวาบน
-3. กด **Load unpacked** แล้วเลือกโฟลเดอร์ `chrome-highlight-extension`
-4. ปักหมุดไอคอนส่วนขยายไว้บน toolbar เพื่อเปิด popup ได้เร็ว
+## Features
 
-## เริ่มใช้ใน 30 วินาที
+- **Highlight everywhere** — enter words once, they apply to every tab
+- **Automatic inflection matching** — `cry` matches `cries`, `cried`, `crying`; `go` matches `went`; `leaf` matches `leaves`
+- **Unicode whole-word matching** — `tall` won't match inside `Installation` (disable for substring matching, e.g. Thai)
+- **Longest match wins** — `error code` is matched before `error`
+- **Sync from Anki** — pull words from a chosen deck via Anki-Connect
+- **Light / Dark / System** — remembers your theme choice
+- **Manual mode** — stops all observers, highlight on demand, text selection never breaks
+- **Customizable shortcut** — press `Alt + Shift + H` to highlight instantly, or rebind it
 
-1. กดไอคอนส่วนขยาย
-2. พิมพ์คำที่อยากไฮไลต์ในช่องแรก คั่นด้วย comma หรือขึ้นบรรทัดใหม่
+## Screenshots
+
+| Real web page | Popup — Highlight tab (light / dark) |
+| --- | --- |
+| <img src="docs/highlight-demo.png" width="480" alt="Highlight on a web page" /> | <img src="docs/popup-light.png" width="260" alt="Highlight tab, light theme" /> <img src="docs/popup-dark.png" width="260" alt="Highlight tab, dark theme" /> |
+
+| Customize tab | System & Anki tab |
+| --- | --- |
+| <img src="docs/popup-style.png" width="300" alt="Matching and color customization tab" /> | <img src="docs/popup-system.png" width="300" alt="System and Anki tab" /> |
+| Word matching + highlight appearance | Auto/manual behavior + theme + Anki Sync |
+
+> All screenshots are generated from the real UI with `npm run shots` — see [Regenerating screenshots](#regenerating-screenshots-docs--shots).
+
+---
+
+## Requirements
+
+| Item | Version / notes |
+| --- | --- |
+| Chrome, Edge, Brave, or Chromium | Manifest V3 support (Chrome 88+) |
+| Node.js | Only for running tests / generating screenshots — v18+, v22 recommended |
+| Anki + Anki-Connect | Only for Sync — add-on code `2055492159` |
+| Git | For cloning the project |
+
+---
+
+## Installation
+
+### Option 1 — Load unpacked (for dev / personal use)
+
+1. Clone or download the project:
+   ```bash
+   git clone https://github.com/not6248/chrome-highlight-extension.git
+   cd chrome-highlight-extension
+   ```
+   Or click **Code → Download ZIP** on GitHub and extract it.
+2. Open `chrome://extensions` in Chrome / Edge / Brave.
+3. Enable **Developer mode** (top-right corner).
+4. Click **Load unpacked** and select the `chrome-highlight-extension` folder.
+5. Pin the extension icon to the toolbar for quick popup access.
+6. Open any web page and press `Alt + Shift + H` — yellow highlights mean it works.
+
+To reload after code changes: go back to `chrome://extensions` and hit **Reload** on this extension.
+
+### Option 2 — Install ZIP from Releases (no git needed)
+
+1. Go to the repo's **Releases** page.
+2. Download `chrome-highlight-extension-vX.Y.Z.zip` and extract it.
+3. Follow steps 2–5 of Option 1.
+
+> To share with a friend: send them the zip built in [Packaging as ZIP](#packaging-as-zip-for-sharing-or-store-submission) and have them follow this option.
+
+### Option 3 — Chrome Web Store
+
+Not published yet — use Option 1 or 2 for now.
+
+---
+
+## Quick start in 30 seconds
+
+1. Click the extension icon.
+2. Type the words to highlight in the first field, separated by commas or new lines:
    ```
    highlight, error code, run, leaf
    ```
-3. กด **บันทึก & Highlight**
-4. เปิดเว็บอะไรก็ได้ที่ไม่มีคำเหล่านี้ แล้วดูผล
+3. Click **Save & Highlight**.
+4. Open any web page and compare with `docs/highlight-demo.png` above.
 
 > [!TIP]
-> ถ้าอยากได้คำจาก Anki ไปที่แท็บ **ระบบ & Anki** กรอก URL แล้วกด **Sync Anki** คำจะถูก merge เข้า list ให้อัตโนมัติ
+> To pull words from Anki, go to the **System & Anki** tab, enter the URL, and click **Sync Anki** — words are merged into your list automatically.
 
-## สามแท็บ ตั้งค่าอย่างไรให้เจอ
+---
 
-| แท็บ | ใช้อะไร |
+## The three tabs
+
+| Tab | What's there |
 | --- | --- |
-| **ไฮไลต์** | คำที่ต้องการ, เปิด/ปิด, สีพื้นหลัง, ปุ่มบันทึก และปุ่มสั่ง highlight |
-| **ปรับแต่ง** | ตัวเล็ก/ใหญ่, จับทั้งคำ, รวมรูปผัน, สีตัวอักษร, ตัวหนา, ขีดเส้นใต้ |
-| **ระบบ & Anki** | โหมดอัตโนมัติ/manual, ธีม, การเชื่อมต่อ Anki |
+| **Highlight** | Your words, on/off toggle, background color, save and highlight-now buttons |
+| **Customize** | Case sensitivity, whole-word, inflection matching, text color, bold, underline |
+| **System & Anki** | Auto/manual mode, theme, Anki connection |
 
-ตัวเลือกที่เปลี่ยนบ่อยอยู่แท็บแรก ที่เหลือย้ายไปแท็บขั้นสูงเพื่อให้หน้าแรกโล่ง
+Frequently changed options live on the first tab; the rest moved to advanced tabs to keep it clean.
 
-## อัตโนมัติ หรือ manual
+## Auto vs. manual mode
 
-| | โหมดอัตโนมัติ (ค่าเริ่มต้น) | โหมด manual |
+| | Auto mode (default) | Manual mode |
 | --- | --- | --- |
-| Highlight ตอนเปิดหน้า | ทำทันที | รอจนกดปุ่ม |
-| เนื้อหาโหลดเพิ่ม (infinite scroll / SPA) | เฝ้า DOM ให้อัตโนมัติ | ไม่เฝ้า DOM |
-| เปลี่ยนสี/คำใน popup | เห็นผลทันที | เก็บค่าไว้ รอกดปุ่ม |
-| ขณะลากเลือกข้อความ | เลื่อน highlight ออกไปก่อน | ไม่แตะ DOM เลย |
+| Highlight on page load | Immediately | Only when you press the button |
+| Late-loaded content (infinite scroll / SPAs) | Watched via DOM observer | Not watched |
+| Popup color/word changes | Applied instantly | Stored, applied on button press |
+| While selecting text | Highlight deferred | Never touches the DOM |
 
-**ทำไมต้องมี manual** — ตอนครอบข้อความด้วย extension อื่นหรือตอนลาก selection การ replace text node ของ Observer จะทำให้ selection หาย โหมด manual ตัด MutationObserver ทิ้งทั้งหมด จึงเลือกและครอบข้อความได้นิ่งๆ
+**Why manual mode exists** — when you select text with another extension (or drag a selection), the observer's text-node replacement destroys the selection. Manual mode removes the MutationObserver entirely, so selection stays stable.
 
-เมื่ออยู่ในโหมด manual ใช้ปุ่ม **Highlight ตอนนี้** บนแท็บแรก (ปุ่มนี้จะบันทึกค่าล่าสุดให้ก่อนเสมอ)
+In manual mode, use **Highlight now** on the first tab (it saves your latest settings first).
 
-## ปุ่มลัด
+## Keyboard shortcut
 
-ค่าเริ่มต้นคือ **`Alt + Shift + H`** ใช้ได้ทันทีบนหน้าเว็บ โดยไม่ต้องเปิด popup
+Default: **`Alt + Shift + H`** — works on any web page, no popup needed.
 
-เปลี่ยนปุ่มได้ที่แท็บ **ไฮไลต์** → กด **เปลี่ยน** ข้างปุ่มลัด แล้วกดชุดปุ่มที่ต้องการ
+To rebind: on the **Highlight** tab click **Change** next to the shortcut, then press your key combo.
 
-- ต้องมี `Ctrl`, `Alt` หรือ `Meta` (Shift ใส่หรือไม่ก็ได้)
-- `Backspace` ล้างปุ่มลัด, `Esc` ยกเลิก
-- ปุ่มจะทำงานเมื่อโฟกัสอยู่บนหน้าเว็บ และใช้ค่าล่าสุดที่บันทึกไว้
+- Must include `Ctrl`, `Alt`, or `Meta` (Shift optional)
+- `Backspace` clears the shortcut, `Esc` cancels
+- Works when focus is on the page, using the last saved settings
 
-## Sync Anki
+---
 
-1. เปิด Anki ค้างไว้
-2. ติดตั้ง add-on **Anki-Connect** (code `2055492159`) แล้ว restart Anki
-3. ในแท็บ **ระบบ & Anki** ตั้งค่า:
+## Build / Dev — is a build step needed?
+
+**No build needed.** This is a pure Manifest V3 project (plain HTML + CSS + JS) — no bundler, no transpile. Load the folder into Chrome directly.
+
+`npm install` exists for two things only: running tests and generating `docs/*.png`.
+
+```bash
+npm install        # first time only (installs playwright-core for tests)
+npm test           # unit + browser tests (auto-starts test server)
+npm run test:anki      # Anki-Connect tests only
+npm run test:shortcut  # shortcut tests only
+npm run test:highlight # highlight tests only (TEST_URL=... supported)
+npm run shots      # regenerate popup screenshots into docs/
+```
+
+| Command | What it does |
+| --- | --- |
+| `npm test` | Runs `test-anki.mjs` + `test-shortcut.mjs` + `test-highlight.mjs` in sequence |
+| `TEST_URL=http://... npm run test:highlight` | Tests highlighting against another URL instead of `test-page.html` |
+| `CHROME=/path/to/chrome npm run shots` | Generates screenshots with a different Chrome (defaults to Playwright Chromium) |
+
+### Bumping the version
+
+Update both places to match, then reload the extension:
+
+1. `manifest.json` → `"version": "1.5.0"`
+2. `package.json` → `"version": "1.0.0"` (recommended: keep them in sync)
+
+### Packaging as ZIP (for sharing or Store submission)
+
+```bash
+# from the project root
+zip -r chrome-highlight-extension-v1.5.0.zip . \
+  -x "node_modules/*" ".git/*" "docs/*" "*.log" ".DS_Store"
+```
+
+Attach this zip to a GitHub Release or upload it to the [Chrome Web Store Developer Dashboard](https://chrome.google.com/webstore/devconsole).
+
+### Regenerating screenshots (`docs/` + `shots`)
+
+The 4 popup screenshots are generated by `scripts/screenshot.mjs` with Playwright (mocks `chrome.*` and opens the real `popup.html`):
+
+```bash
+npm run shots
+# produces docs/popup-light.png, popup-dark.png, popup-style.png, popup-system.png
+```
+
+`docs/highlight-demo.png` is generated from the real pipeline (`parseKeywords → expandKeywords → buildHighlightRegex` from `highlight.js`) injected into a sample page — if you change matching logic, re-run tests + regenerate screenshots.
+
+---
+
+## Anki Sync
+
+1. Keep Anki open.
+2. Install the **Anki-Connect** add-on (code `2055492159`) and restart Anki.
+3. In the **System & Anki** tab:
    - **URL** — `http://127.0.0.1:8765`
-   - **API key** — ใส่ถ้าเปิดใช้ใน Anki-Connect
-   - **Deck** — เช่น `Default` (เว้นว่าง = ทุก deck)
-   - **Field** — เช่น `Word` (เว้นว่าง = เดาฟิลด์คำ, `*` = ทุกฟิลด์)
-   - **โหมด** — `ทุกคำ` หรือ `เคยเรียนแล้ว` (`-is:new`)
-4. กด **Sync Anki** แล้วรอข้อความยืนยัน
+   - **API key** — only if enabled in Anki-Connect
+   - **Deck** — e.g. `Default` (empty = all decks)
+   - **Field** — e.g. `Word` (empty = guess word field, `*` = all fields)
+   - **Mode** — `All words` or `Learned only` (`-is:new`)
+4. Click **Sync Anki** and wait for the confirmation message.
 
-ส่วนขยายจะลอง `POST /api/v1` (JSON-RPC 2.0) ก่อน แล้ว fallback ไป `POST /` แบบ API v6
+The extension tries `POST /api/v1` (JSON-RPC 2.0) first, then falls back to `POST /` (API v6).
 
-## การจับคู่คำ
+## Matching rules
 
 ```
-tall        → tall, taller, tallest        (ไม่โดน Installation)
+tall        → tall, taller, tallest        (not inside Installation)
 cry         → cry, cries, cried, crying
 leaf        → leaf, leaves
 run         → run, runs, ran, running
-error code  → จับทั้งวลีก่อนคำเดี่ยว
+error code  → whole phrase wins over single word
 ```
 
-- **ตัวเล็ก/ใหญ่** — ไม่สนโดยค่าเริ่มต้น
-- **จับทั้งคำ** — ใช้ Unicode boundary รองรับภาษาไทยและตัวเลข
-- **คำที่ build regex ไม่ได้** — ข้ามอย่างปลอดภัย ไม่ทำให้ทั้งหน้าพัง
-- ไม่แตะ `input`, `textarea`, `select`, `script`, `style` และ contenteditable
+- **Case sensitivity** — off by default
+- **Whole-word** — Unicode boundaries, works with Thai and digits
+- **Unbuildable regex input** — skipped safely, never breaks the page
+- Never touches `input`, `textarea`, `select`, `script`, `style`, or contenteditable
 
-## โครงสร้างโปรเจกต์
+## Project structure
 
 ```
 chrome-highlight-extension/
 ├── manifest.json        # MV3, permissions: storage + <all_urls>
-├── popup.html           # UI 3 แท็บ + ธีม light/dark
-├── popup.js             # โหลด/บันทึกค่า, สลับแท็บ, sync Anki
-├── content.js           # เดิน text node, highlight, observer, manual mode
-├── content.css          # สไตล์ของ span.ce-highlight
-├── shortcut.js          # parse/เทียบปุ่มลัดที่ผู้ใช้ตั้งเอง
-├── highlight.js         # parse keywords, ขยายรูปผัน, สร้าง trie regex
+├── popup.html           # 3-tab UI + light/dark themes
+├── popup.js             # load/save settings, tab switching, Anki sync
+├── content.js           # text-node walker, highlighting, observer, manual mode
+├── content.css          # styles for span.ce-highlight
+├── shortcut.js          # parse/match user-defined shortcuts
+├── highlight.js         # parse keywords, expand inflections, build trie regex
 ├── anki.js              # Anki-Connect client + storage helper
 ├── test-*.mjs           # unit + browser tests
 ├── scripts/screenshot.mjs
-└── docs/                # ภาพประกอบ README
+├── test-page.html       # test page
+└── docs/                # README images
+    ├── highlight-demo.png
+    ├── popup-light.png
+    ├── popup-dark.png
+    ├── popup-style.png
+    └── popup-system.png
 ```
 
-## พัฒนาและทดสอบ
+## Privacy
 
-```bash
-npm install        # ครั้งแรกเท่านั้น
-npm test           # unit + browser test (auto-start test server)
-npm run shots      # สร้างภาพ popup ใหม่ลง docs/
-```
+- Words and settings live only in your browser's `chrome.storage`
+- Keywords are stored in `storage.local` since they may exceed `storage.sync` quota
+- No analytics, no external servers
+- Anki-Connect only talks to `127.0.0.1` as you configured
 
-- `npm test` ใช้ Playwright Chromium จาก `PLAYWRIGHT_BROWSERS_PATH`
-- เปลี่ยน browser ได้ด้วย `CHROME=/path/to/chrome npm run shots`
-- ทดสอบกับหน้าอื่นได้ด้วย `TEST_URL=http://... npm run test:highlight`
+## Troubleshooting
 
-## ความเป็นส่วนตัว
-
-- คำและตั้งค่าอยู่ใน `chrome.storage` ของเบราว์เซอร์คุณเท่านั้น
-- keywords เก็บใน `storage.local` เพราะอาจใหญ่กว่า quota ของ `storage.sync`
-- ไม่มี analytics ไม่มี server ภายนอก
-- Anki-Connect คุยกับ `127.0.0.1` ตามที่คุณตั้งไว้เท่านั้น
-
-## แก้ปัญหาที่เจอบ่อย
-
-| อาการ | ลองทำ |
+| Symptom | Try this |
 | --- | --- |
-| ไม่ highlight บนหน้าเว็บ | เช็คว่าเปิดใช้งานอยู่ และหน้าเว็บโหลดก่อน extension ติดตั้งหรือไม่ (refresh หน้า) |
-| Selection หายขณะครอบข้อความ | เปิดโหมด manual ในแท็บ **ระบบ & Anki** |
-| Sync ไม่ติด | เปิด Anki, เช็ค Anki-Connect, approve popup ใน Anki, ใส่ origin ใน `webCorsOriginList` |
-| คำภาษาไทยไม่โดน | ปิด **จับทั้งคำเท่านั้น** เพื่อจับแบบ substring |
-| เปลี่ยนสีแล้วไม่เห็นผล | โหมด manual ต้องกด **Highlight ตอนนี้** |
-| ปุ่มลัดไม่ทำงาน | เช็คว่าโฟกัสอยู่บนหน้าเว็บ ไม่ใช่ในช่อง address bar และปุ่มไม่ชนกับ shortcut ของ Chrome |
+| Nothing highlights | Check it's enabled, and refresh pages loaded before install |
+| Selection disappears when annotating | Enable manual mode in the **System & Anki** tab |
+| Sync fails | Keep Anki open, check Anki-Connect, approve the Anki popup, add the extension origin to `webCorsOriginList` |
+| Thai words don't match | Turn off **whole-word only** for substring matching |
+| Color change has no effect | In manual mode you must press **Highlight now** |
+| Shortcut doesn't work | Focus must be on the page (not the address bar), and the combo must not clash with Chrome's |
+| Load unpacked errors | Select the folder containing `manifest.json` at its top level, not a nested folder |
 
 ## License
 
-ISC — ดูรายละเอียดใน [LICENSE](LICENSE)
+ISC — see [LICENSE](LICENSE) for details.

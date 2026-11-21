@@ -72,5 +72,5 @@ async function shot(name, { settings = {}, tab = "highlight", theme = "light" })
 await shot("popup-light.png", { tab: "highlight", theme: "light" });
 await shot("popup-dark.png", { tab: "highlight", theme: "dark", settings: { theme: "dark" } });
 await shot("popup-style.png", { tab: "style", theme: "light" });
-await shot("popup-system.png", { tab: "system", theme: "dark", settings: { autoHighlight: false, theme: "dark" } });
+await shot("popup-system.png", { tab: "system", theme: "light", settings: { autoHighlight: false, theme: "light" } });
 await browser.close();
