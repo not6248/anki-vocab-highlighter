@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="th" data-theme="light">
+<html lang="en" data-theme="light">
 <head>
 <meta charset="utf-8" />
 <style>
@@ -164,104 +164,111 @@
   <header>
     <span class="swatch" aria-hidden="true"></span>
     <h1>Anki Vocab Highlighter</h1>
-    <button id="themeQuick" class="icon-btn" type="button" title="สลับธีมสว่าง / มืด">ธีม: ระบบ</button>
+    <button id="themeQuick" class="icon-btn" type="button" data-i18n-title="themeQuickTitle" title="Switch light / dark theme">Theme: System</button>
   </header>
 
-  <nav class="tabs" role="tablist" aria-label="ส่วนตั้งค่า">
-    <button role="tab" id="tabbtn-highlight" aria-selected="true" aria-controls="tab-highlight" data-tab="highlight" type="button">ไฮไลต์</button>
-    <button role="tab" id="tabbtn-style" aria-selected="false" aria-controls="tab-style" data-tab="style" type="button">ปรับแต่ง</button>
-    <button role="tab" id="tabbtn-system" aria-selected="false" aria-controls="tab-system" data-tab="system" type="button">ระบบ &amp; Anki</button>
+  <nav class="tabs" role="tablist" data-i18n-aria="navLabel" aria-label="Settings">
+    <button role="tab" id="tabbtn-highlight" aria-selected="true" aria-controls="tab-highlight" data-tab="highlight" type="button" data-i18n="tabHighlight">Highlight</button>
+    <button role="tab" id="tabbtn-style" aria-selected="false" aria-controls="tab-style" data-tab="style" type="button" data-i18n="tabStyle">Customize</button>
+    <button role="tab" id="tabbtn-system" aria-selected="false" aria-controls="tab-system" data-tab="system" type="button" data-i18n="tabSystem">System & Anki</button>
   </nav>
 
   <main>
     <!-- แท็บ 1: พื้นฐาน คงเดิม -->
     <section class="panel active" id="tab-highlight" role="tabpanel" aria-labelledby="tabbtn-highlight" tabindex="0">
-      <p class="hint">ใส่คำคั่นด้วย comma หรือขึ้นบรรทัดใหม่<br />เช่น <code>xxx, yyy, zzz</code></p>
+      <p class="hint" data-i18n-html="hint1">Separate words with commas or new lines<br />e.g. <code>xxx, yyy, zzz</code></p>
       <textarea id="keywords" placeholder="xxx, yyy, zzz"></textarea>
       <div><span id="count">ยังไม่มีคำ</span></div>
       <div class="row">
-        <label><input type="checkbox" id="enabled" checked /> เปิดใช้งาน</label>
-        <label>พื้นหลัง <input type="color" id="color" value="#ffeb3b" /></label>
+        <label><input type="checkbox" id="enabled" checked /> <span data-i18n="enabled">Enabled</span></label>
+        <label><span data-i18n="bgColor">Background</span> <input type="color" id="color" value="#ffeb3b" /></label>
       </div>
       <div class="row">
-        <button id="save" class="btn primary" type="button">บันทึก &amp; Highlight</button>
-        <button id="clear" class="btn" type="button">ล้างคำ</button>
+        <button id="save" class="btn primary" type="button" data-i18n="save">Save &amp; Highlight</button>
+        <button id="clear" class="btn" type="button" data-i18n="clear">Clear words</button>
       </div>
       <div class="row">
-        <button id="highlightNow" class="btn" type="button">Highlight ตอนนี้</button>
-        <button id="clearPage" class="btn ghost" type="button" title="ล้างแถบสีในหน้าที่เปิดอยู่">ล้างสีในหน้า</button>
+        <button id="highlightNow" class="btn" type="button" data-i18n="highlightNow">Highlight now</button>
+        <button id="clearPage" class="btn ghost" type="button" data-i18n-title="clearPageTitle" title="Remove highlights from the open page" data-i18n="clearPage">Clear page colors</button>
       </div>
       <div class="shortcut-row">
-        <span class="shortcut-label">ปุ่มลัด</span>
+        <span class="shortcut-label" data-i18n="shortcutLabel">Shortcut</span>
         <kbd id="shortcutKeys">Alt + Shift + H</kbd>
-        <button id="editShortcut" class="linkbtn" type="button">เปลี่ยน</button>
+        <button id="editShortcut" class="linkbtn" type="button" data-i18n="changeBtn">Change</button>
       </div>
-      <p class="tiny" id="shortcutHint">กดปุ่มนี้บนหน้าเว็บเพื่อ highlight ทันที ไม่ต้องเปิด popup</p>
+      <p class="tiny" id="shortcutHint" data-i18n="shortcutHint">Press this on any web page to highlight instantly, no popup needed</p>
       <div id="status" role="status"></div>
     </section>
 
     <!-- แท็บ 2: ขั้นสูง — การจับคู่ + ลักษณะ -->
     <section class="panel" id="tab-style" role="tabpanel" aria-labelledby="tabbtn-style" data-tab="style" tabindex="0" hidden>
       <fieldset>
-        <legend>การจับคู่คำ</legend>
+        <legend data-i18n="matchLegend">Word matching</legend>
         <div class="row">
-          <label><input type="checkbox" id="caseSensitive" /> ตัวเล็ก/ใหญ่ตรงกัน</label>
+          <label><input type="checkbox" id="caseSensitive" /> <span data-i18n="matchCase">Match case</span></label>
         </div>
         <div class="row">
-          <label><input type="checkbox" id="wholeWord" checked /> จับทั้งคำเท่านั้น</label>
+          <label><input type="checkbox" id="wholeWord" checked /> <span data-i18n="wholeWord">Whole words only</span></label>
         </div>
         <div class="row">
-          <label><input type="checkbox" id="inflect" checked /> รวมรูปผัน (s/ed/ing/irregular)</label>
+          <label><input type="checkbox" id="inflect" checked /> <span data-i18n="inflect">Include inflections (s/ed/ing/irregular)</span></label>
         </div>
-        <p class="tiny">ปิดทั้งคำแล้วจับแบบ substring ได้ เหมาะกับภาษาไทยที่ไม่มีช่องว่าง</p>
+        <p class="tiny" data-i18n="subMatch">Turn whole-word off for substring matching — useful for Thai with no spaces</p>
       </fieldset>
       <fieldset>
-        <legend>ลักษณะแถบสี</legend>
+        <legend data-i18n="styleLegend">Highlight appearance</legend>
         <div class="row">
-          <label>สีตัวอักษร <input type="color" id="textColor" value="#000000" /></label>
+          <label><span data-i18n="textColor">Text color</span> <input type="color" id="textColor" value="#000000" /></label>
         </div>
         <div class="row">
-          <label><input type="checkbox" id="bold" /> ตัวหนา</label>
-          <label><input type="checkbox" id="underline" /> ขีดเส้นใต้</label>
+          <label><input type="checkbox" id="bold" /> <span data-i18n="bold">Bold</span></label>
+          <label><input type="checkbox" id="underline" /> <span data-i18n="underline">Underline</span></label>
         </div>
-        <p class="tiny">สีพื้นหลังตั้งได้ที่แท็บไฮไลต์</p>
+        <p class="tiny" data-i18n="bgHint">Background color lives on the Highlight tab</p>
       </fieldset>
     </section>
 
     <!-- แท็บ 3: ขั้นสูง — พฤติกรรม + ธีม + Anki -->
     <section class="panel" id="tab-system" role="tabpanel" aria-labelledby="tabbtn-system" tabindex="0" hidden>
       <fieldset>
-        <legend>พฤติกรรม</legend>
+        <legend data-i18n="behaviorLegend">Behavior</legend>
         <div class="row">
-          <label class="switch"><input type="checkbox" id="autoHighlight" checked /> ไฮไลต์อัตโนมัติ</label>
+          <label class="switch"><input type="checkbox" id="autoHighlight" checked /> <span data-i18n="autoOn">Highlight automatically</span></label>
         </div>
-        <div class="mode-note" id="autoNote">เปิด: highlight ทุกหน้า + เฝ้าหน้าเว็บที่โหลดเพิ่ม (เหมาะกับเว็บอ่านทั่วไป)<br />ปิด: กด “Highlight ตอนนี้” เอง ไม่แตะ DOM ขณะครอบข้อความหรือเลือกข้อความ</div>
+        <div class="mode-note" id="autoNote" data-i18n-html="autoNote">On: highlight every page + watch pages that load more (best for reading)<br />Off: press “Highlight now” yourself — never touches the DOM while you select text</div>
       </fieldset>
       <fieldset>
-        <legend>ธีม popup</legend>
+        <legend data-i18n="themeLegend">Popup theme</legend>
         <div class="seg" role="group" aria-label="เลือกธีม">
-          <button type="button" data-theme-opt="light" aria-pressed="false">สว่าง</button>
-          <button type="button" data-theme-opt="system" aria-pressed="true">ระบบ</button>
-          <button type="button" data-theme-opt="dark" aria-pressed="false">มืด</button>
+          <button type="button" data-theme-opt="light" aria-pressed="false" data-i18n="themeLight">Light</button>
+          <button type="button" data-theme-opt="system" aria-pressed="true" data-i18n="themeSystem">System</button>
+          <button type="button" data-theme-opt="dark" aria-pressed="false" data-i18n="themeDark">Dark</button>
+        </div>
+      </fieldset>
+      <fieldset>
+        <legend data-i18n="langLegend">Language</legend>
+        <div class="seg" role="group" aria-label="Language">
+          <button type="button" data-lang-opt="en" aria-pressed="true">English</button>
+          <button type="button" data-lang-opt="th" aria-pressed="false">ไทย</button>
         </div>
       </fieldset>
       <fieldset>
         <legend>Anki Sync (Anki-Connect)</legend>
-        <p class="hint">ดึงคำจาก Anki มาเป็น keywords — เปิด Anki ทิ้งไว้ก่อนกด Sync</p>
+        <p class="hint" data-i18n="ankiHint">Pull words from Anki as keywords — keep Anki open before pressing Sync</p>
         <input type="text" id="ankiUrl" placeholder="http://127.0.0.1:8765" />
-        <input type="password" id="ankiKey" placeholder="API key (ถ้ามี, ไม่มีเว้นว่าง)" />
-        <input type="text" id="ankiDeck" placeholder="Deck เช่น Default (ว่าง = ทุก deck, * = ทุก deck)" />
-        <input type="text" id="ankiField" placeholder="Field เช่น Word (ว่าง = เดาฟิลด์คำ, * = ทุกฟิลด์)" />
+        <input type="password" id="ankiKey" data-i18n-ph="phApiKey" placeholder="API key (if set, else leave empty)" />
+        <input type="text" id="ankiDeck" data-i18n-ph="phDeck" placeholder="Deck e.g. Default (empty = every deck, * = every deck)" />
+        <input type="text" id="ankiField" data-i18n-ph="phField" placeholder="Field e.g. Word (empty = guess word field, * = every field)" />
         <div class="radio-row">
-          <label><input type="radio" name="ankiMode" value="all" /> ทุกคำ</label>
-          <label><input type="radio" name="ankiMode" value="learned" checked /> เคยเรียนแล้ว</label>
+          <label><input type="radio" name="ankiMode" value="all" /> <span data-i18n="modeAll">All words</span></label>
+          <label><input type="radio" name="ankiMode" value="learned" checked /> <span data-i18n="modeLearned">Learned only</span></label>
         </div>
         <div class="row">
           <button id="syncAnki" type="button" class="btn">Sync Anki</button>
-          <button id="testAnki" type="button" class="btn">ทดสอบเชื่อมต่อ</button>
+          <button id="testAnki" type="button" class="btn" data-i18n="testBtn">Test connection</button>
         </div>
         <div id="ankiStatus"></div>
-        <p class="tiny">เคยเรียนแล้ว = ไพ่ที่ไม่ใช่ new (-is:new). ถ้า Sync ไม่ติด: เช็ค Anki เปิดอยู่, approve popup ใน Anki, ใส่ origin ของ extension ใน webCorsOriginList</p>
+        <p class="tiny" data-i18n="ankiTiny">Learned = cards that are not new (-is:new). If sync fails: check Anki is open, approve the Anki popup, add the extension origin to webCorsOriginList</p>
       </fieldset>
     </section>
   </main>

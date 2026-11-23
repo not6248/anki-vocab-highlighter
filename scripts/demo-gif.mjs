@@ -6,8 +6,9 @@
  * (parseKeywords → expandKeywords → buildHighlightRegex) to the article.
  * Captures frames with Playwright, then assembles docs/demo.gif with ffmpeg.
  *
- * Usage: npm run gif  (or: node scripts/demo-gif.mjs)
- *        CHROME=/path/to/chrome node scripts/demo-gif.mjs
+ * Usage: npm run gif      (English UI → docs/demo.gif)
+ *        npm run gif:th   (Thai UI → docs/demo-th.gif)
+ *        CHROME=/path/to/chrome node scripts/demo-gif.mjs [--lang=th]
  *        FPS=10 WIDTH=780 node scripts/demo-gif.mjs
  */
 import { chromium } from "playwright-core";
@@ -21,13 +22,36 @@ import { createRequire } from "node:module";
 const require = createRequire(import.meta.url);
 const Highlight = require("../highlight.js");
 
-const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const docsDir = path.join(root, "docs");
-const outGif = path.join(docsDir, "demo.gif");
-fs.mkdirSync(docsDir, { recursive: true });
-
 const FPS = Number(process.env.FPS || 10);
 const WIDTH = Number(process.env.WIDTH || 780); // must stay <= 800
+const LANG = (() => {
+  const arg = (process.argv.find((a) => a.startsWith("--lang=")) || "").split("=")[1];
+  return arg === "th" ? "th" : "en";
+})();
+
+const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
+const docsDir = path.join(root, "docs");
+const outGif = path.join(docsDir, LANG === "th" ? "demo-th.gif" : "demo.gif");
+fs.mkdirSync(docsDir, { recursive: true });
+
+// Stage captions per UI language (the demo article itself stays English).
+const CAP = {
+  en: {
+    s1: `<b>1/4 · Plain page</b> — real popup, nothing highlighted yet`,
+    s2: `<b>2/4 · Typing keywords</b> — run, cry, error code`,
+    s3: `<b>3/4 · Highlighted</b> — running and cried match too`,
+    s4: `<b>4/4 · Phrases win</b> — error code matches as one unit`,
+    note: "<code>error code</code> matches as one phrase — the lone <code>error</code> at the end stays plain.",
+  },
+  th: {
+    s1: `<b>1/4 · หน้าปกติ</b> — popup จริง ยังไม่มีไฮไลต์`,
+    s2: `<b>2/4 · พิมพ์คำศัพท์</b> — run, cry, error code`,
+    s3: `<b>3/4 · ไฮไลต์แล้ว</b> — running กับ cried ก็โดนด้วย`,
+    s4: `<b>4/4 · วลีชนะ</b> — error code โดนทั้งวลี`,
+    note: "<code>error code</code> โดนทั้งวลี — <code>error</code> ตัวเดียวท้ายประโยคไม่โดน",
+  },
+}[LANG];
+
 if (WIDTH > 800) {
   console.error(`WIDTH must be <= 800 (got ${WIDTH})`);
   process.exit(1);
@@ -88,7 +112,7 @@ const page = await browser.newPage({
 
 // Mock chrome.* for the real popup (same approach as scripts/screenshot.mjs).
 // Registered before any navigation so it also applies to the popup iframe.
-await page.addInitScript(() => {
+await page.addInitScript((lang) => {
   const sync = {
     color: "#ffeb3b",
     textColor: "#000000",
@@ -100,6 +124,7 @@ await page.addInitScript(() => {
     enabled: true,
     autoHighlight: true,
     theme: "light",
+    language: lang,
     ankiUrl: "http://127.0.0.1:8765",
     ankiKey: "",
     ankiDeck: "",
@@ -146,7 +171,7 @@ await page.addInitScript(() => {
   try {
     localStorage.setItem("ce-tab", "highlight");
   } catch {}
-});
+}, LANG);
 
 // Open the real test page (requirement) via file://
 await page.goto(pathToFileURL(path.join(root, "test-page.html")).href, {
@@ -303,13 +328,13 @@ async function snap(tag) {
 }
 
 // a. plain page: real popup with empty keywords, article untouched
-await setStep(1, `<b>1/4 · Plain page</b> — real popup, nothing highlighted yet`);
+await setStep(1, CAP.s1);
 await popup.locator("#keywords").click();
 await page.waitForTimeout(350);
 await snap("a-plain");
 
 // b. type into the REAL popup field (count badge updates by itself)
-await setStep(2, `<b>2/4 · Typing keywords</b> — run, cry, error code`);
+await setStep(2, CAP.s2);
 await popup.locator("#keywords").pressSequentially("run, cry, ", { delay: 60 });
 await snap("b-typing");
 await popup.locator("#keywords").pressSequentially("error code", { delay: 60 });
@@ -321,18 +346,17 @@ await popup.locator("#save").click();
 await page.waitForTimeout(300);
 await snap("c-press");
 const total = await applyHighlightInPage(built.source, built.flags);
-await setStep(3, `<b>3/4 · Highlighted</b> — running and cried match too`);
+await setStep(3, CAP.s3);
 await page.waitForTimeout(350);
 await snap("c-highlight");
 
 // d. whole-phrase win: footnote calls out "error code" vs lone "error"
-await setStep(4, `<b>4/4 · Phrases win</b> — error code matches as one unit`);
-await page.evaluate(() => {
+await setStep(4, CAP.s4);
+await page.evaluate((html) => {
   const note = document.getElementById("gif-note");
-  note.innerHTML =
-    "<code>error code</code> matches as one phrase — the lone <code>error</code> at the end stays plain.";
+  note.innerHTML = html;
   note.classList.add("show");
-});
+}, CAP.note);
 await page.waitForTimeout(350);
 await snap("d-phrase");
 

@@ -15,7 +15,7 @@
 A Chrome extension to highlight vocabulary you're learning on any web page — built for language learning with Anki sync.<br />
 ส่วนขยาย Chrome สำหรับคนเรียนภาษา นักอ่าน และสาย Anki ปรับสีได้ตามใจ แยกโหมดอัตโนมัติกับ manual และมี dark mode ในตัว
 
-<img src="docs/demo.gif" width="720" alt="Demo: พิมพ์ run, cry, error code แล้วกด Save & Highlight ทำให้ running, cried ติดไฮไลต์ และ error code ถูกจับทั้งวลี" />
+<img src="docs/demo-th.gif" width="720" alt="Demo: พิมพ์ run, cry, error code แล้วกด Save & Highlight ทำให้ running, cried ติดไฮไลต์ และ error code ถูกจับทั้งวลี" />
 
 [![Manifest V3](https://img.shields.io/badge/Manifest-V3-1e2430?style=flat-square)](https://developer.chrome.com/docs/extensions/develop/migrate/what-is-mv3)
 [![Chrome](https://img.shields.io/badge/Chrome-Extension-ffe14d?style=flat-square&labelColor=1e2430)](https://www.google.com/chrome/)
@@ -35,6 +35,7 @@ A Chrome extension to highlight vocabulary you're learning on any web page — b
 - **จับทั้งคำแบบ Unicode** — `tall` ไม่ไปโดนใน `Installation` หรือ `taller` (ปิดได้ถ้าอยากจับ substring เช่นภาษาไทย)
 - **คำยาวชนะคำสั้น** — `error code` ถูกจับก่อน `error`
 - **Sync จาก Anki** — ดึงคำจาก deck ที่เลือกผ่าน Anki-Connect
+- **UI ไทย + อังกฤษ** — เปลี่ยนภาษาได้ที่แท็บระบบ (ค่าเริ่มต้นภาษาอังกฤษ)
 - **Light / Dark / ตามระบบ** — จำธีมที่เลือกไว้
 - **โหมด manual** — หยุด Observer ทั้งหมด กดปุ่มเองเมื่อพร้อม เลือกข้อความได้ไม่หลุด
 - **ปุ่มลัดตั้งเองได้** — กด `Alt + Shift + H` เพื่อ highlight ทันที หรือเปลี่ยนเป็นปุ่มที่ถนัด
@@ -43,12 +44,14 @@ A Chrome extension to highlight vocabulary you're learning on any web page — b
 
 | หน้าเว็บจริง | Popup — แท็บไฮไลต์ (สว่าง / มืด) |
 | --- | --- |
-| <img src="docs/highlight-demo.png" width="480" alt="ไฮไลต์บนหน้าเว็บ" /> | <img src="docs/popup-light.png" width="260" alt="แท็บไฮไลต์โหมดสว่าง" /> <img src="docs/popup-dark.png" width="260" alt="แท็บไฮไลต์โหมดมืด" /> |
+| <img src="docs/highlight-demo.png" width="480" alt="ไฮไลต์บนหน้าเว็บ" /> | <img src="docs/popup-light-th.png" width="260" alt="แท็บไฮไลต์โหมดสว่าง" /> <img src="docs/popup-dark-th.png" width="260" alt="แท็บไฮไลต์โหมดมืด" /> |
 
 | แท็บปรับแต่ง | แท็บระบบ & Anki |
 | --- | --- |
-| <img src="docs/popup-style.png" width="300" alt="แท็บปรับแต่งการจับคู่และสี" /> | <img src="docs/popup-system.png" width="300" alt="แท็บระบบและ Anki" /> |
-| การจับคู่คำ + ลักษณะแถบสี | พฤติกรรม auto/manual + ธีม + Anki Sync |
+| <img src="docs/popup-style-th.png" width="300" alt="แท็บปรับแต่งการจับคู่และสี" /> | <img src="docs/popup-system-th.png" width="300" alt="แท็บระบบและ Anki" /> |
+| การจับคู่คำ + ลักษณะแถบสี | พฤติกรรม auto/manual + ธีม + ภาษา + Anki Sync |
+
+> ภาพเวอร์ชันภาษาอังกฤษของทุก popup อยู่ข้าง ๆ กันในชื่อ `docs/popup-*.png`
 
 > ภาพทั้งหมดสร้างจากของจริงด้วย `npm run shots` ดูวิธีทำเพิ่มในหัวข้อ [สร้างภาพหน้าจอใหม่](#สร้างภาพหน้าจอใหม่-docs--shots)
 
@@ -105,7 +108,7 @@ A Chrome extension to highlight vocabulary you're learning on any web page — b
    highlight, error code, run, leaf
    ```
 3. กด **บันทึก & Highlight**
-4. เปิดเว็บอะไรก็ได้ แล้วดูผลตามภาพ `docs/demo.gif` ด้านบน (ดู `docs/highlight-demo.png` เพิ่มในหัวข้อภาพหน้าจอ)
+4. เปิดเว็บอะไรก็ได้ แล้วดูผลตามภาพ `docs/demo-th.gif` ด้านบน (ดู `docs/highlight-demo.png` เพิ่มในหัวข้อภาพหน้าจอ)
 
 > [!TIP]
 > ถ้าอยากได้คำจาก Anki ไปที่แท็บ **ระบบ & Anki** กรอก URL แล้วกด **Sync Anki** คำจะถูก merge เข้า list ให้อัตโนมัติ
@@ -118,7 +121,7 @@ A Chrome extension to highlight vocabulary you're learning on any web page — b
 | --- | --- |
 | **ไฮไลต์** | คำที่ต้องการ, เปิด/ปิด, สีพื้นหลัง, ปุ่มบันทึก และปุ่มสั่ง highlight |
 | **ปรับแต่ง** | ตัวเล็ก/ใหญ่, จับทั้งคำ, รวมรูปผัน, สีตัวอักษร, ตัวหนา, ขีดเส้นใต้ |
-| **ระบบ & Anki** | โหมดอัตโนมัติ/manual, ธีม, การเชื่อมต่อ Anki |
+| **ระบบ & Anki** | โหมดอัตโนมัติ/manual, ธีม, ภาษา, การเชื่อมต่อ Anki |
 
 ตัวเลือกที่เปลี่ยนบ่อยอยู่แท็บแรก ที่เหลือย้ายไปแท็บขั้นสูงเพื่อให้หน้าแรกโล่ง
 
@@ -191,13 +194,16 @@ zip -r anki-vocab-highlighter-v1.5.0.zip . \
 
 ```bash
 npm run shots
-# ได้ docs/popup-light.png, popup-dark.png, popup-style.png, popup-system.png
+# ได้ 8 ไฟล์: docs/popup-{light,dark,style,system}.png (UI อังกฤษ)
+#           + docs/popup-{light,dark,style,system}-th.png (UI ไทย)
 npm run gif
-# ได้ docs/demo.gif (780px, 10fps, วนซ้ำไม่จำกัด) ผ่าน scripts/demo-gif.mjs + ffmpeg
+# ได้ docs/demo.gif (UI อังกฤษ: 780px, 10fps, วนซ้ำไม่จำกัด)
+npm run gif:th
+# ได้ docs/demo-th.gif (UI ไทย) ผ่าน scripts/demo-gif.mjs --lang=th + ffmpeg
 ```
 
 ภาพ `docs/highlight-demo.png` สร้างจาก pipeline จริง (`parseKeywords → expandKeywords → buildHighlightRegex` จาก `highlight.js`) แล้วฉีดลงหน้าเว็บตัวอย่าง — ถ้าแก้ตรรกะการจับคู่ ควรรันเทสต์ + ถ่ายภาพใหม่เสมอ
-ภาพ `docs/demo.gif` ใช้ pipeline เดียวกัน: เปิด `test-page.html` พิมพ์ `run, cry, error code` กด Save & Highlight (โดนทั้ง `running`, `cried`) และโชว์ว่า `error code` ถูกจับทั้งวลี
+ภาพ `docs/demo.gif` (UI อังกฤษ) และ `docs/demo-th.gif` (UI ไทย) ใช้ pipeline เดียวกัน: เปิด `test-page.html` พิมพ์ `run, cry, error code` กด Save & Highlight (โดนทั้ง `running`, `cried`) และโชว์ว่า `error code` ถูกจับทั้งวลี
 
 ---
 
@@ -244,14 +250,20 @@ anki-vocab-highlighter/
 ├── anki.js              # Anki-Connect client + storage helper
 ├── test-*.mjs           # unit + browser tests
 ├── scripts/screenshot.mjs
+├── scripts/demo-gif.mjs
 ├── test-page.html       # หน้าเว็บสำหรับเทสต์
 └── docs/                # ภาพประกอบ README
-    ├── demo.gif
+    ├── demo.gif            # GIF สาธิต UI อังกฤษ
+    ├── demo-th.gif         # GIF สาธิต UI ไทย
     ├── highlight-demo.png
     ├── popup-light.png
     ├── popup-dark.png
     ├── popup-style.png
-    └── popup-system.png
+    ├── popup-system.png
+    ├── popup-light-th.png (UI ไทย)
+    ├── popup-dark-th.png (UI ไทย)
+    ├── popup-style-th.png (UI ไทย)
+    └── popup-system-th.png (UI ไทย)
 ```
 
 ## ความเป็นส่วนตัว

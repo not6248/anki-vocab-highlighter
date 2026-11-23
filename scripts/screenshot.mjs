@@ -1,4 +1,6 @@
 /* Renders the popup with mocked chrome.* APIs for README screenshots.
+ * Generates both languages in one run: default filenames are English,
+ * "-th" suffixed filenames are Thai.
  * Usage: node scripts/screenshot.mjs           (uses playwright-core chromium)
  *        CHROME=/path/to/chrome node scripts/screenshot.mjs
  */
@@ -14,9 +16,9 @@ fs.mkdirSync(outDir, { recursive: true });
 const EXE = process.env.CHROME || "/home/not6248/.cache/ms-playwright/chromium-1208/chrome-linux64/chrome";
 const browser = await chromium.launch({ executablePath: EXE, headless: true });
 
-async function shot(name, { settings = {}, tab = "highlight", theme = "light" }) {
+async function shot(name, { settings = {}, tab = "highlight", theme = "light", lang = "en" }) {
   const page = await browser.newPage({ viewport: { width: 372, height: 620 }, deviceScaleFactor: 2 });
-  settings = { theme, ...settings };
+  settings = { theme, language: lang, ...settings };
   await page.addInitScript(
     ({ settings }) => {
       const sync = {
@@ -30,6 +32,7 @@ async function shot(name, { settings = {}, tab = "highlight", theme = "light" })
         enabled: true,
         autoHighlight: true,
         theme: "light",
+        language: "en",
         ankiUrl: "http://127.0.0.1:8765",
         ankiKey: "",
         ankiDeck: "",
@@ -61,7 +64,7 @@ async function shot(name, { settings = {}, tab = "highlight", theme = "light" })
   );
   await page.addInitScript((t) => localStorage.setItem("ce-tab", t), tab);
   await page.goto(pathToFileURL(path.join(root, "popup.html")).href, { waitUntil: "load" });
-  await page.waitForTimeout(150);
+  await page.waitForTimeout(250);
   const height = await page.evaluate(() => document.body.scrollHeight);
   await page.setViewportSize({ width: 372, height });
   await page.screenshot({ path: path.join(outDir, name), fullPage: true });
@@ -69,8 +72,11 @@ async function shot(name, { settings = {}, tab = "highlight", theme = "light" })
   console.log("wrote docs/" + name);
 }
 
-await shot("popup-light.png", { tab: "highlight", theme: "light" });
-await shot("popup-dark.png", { tab: "highlight", theme: "dark", settings: { theme: "dark" } });
-await shot("popup-style.png", { tab: "style", theme: "light" });
-await shot("popup-system.png", { tab: "system", theme: "light", settings: { autoHighlight: false, theme: "light" } });
+for (const lang of ["en", "th"]) {
+  const sfx = lang === "en" ? "" : "-th";
+  await shot(`popup-light${sfx}.png`, { tab: "highlight", theme: "light", lang });
+  await shot(`popup-dark${sfx}.png`, { tab: "highlight", theme: "dark", settings: { theme: "dark" }, lang });
+  await shot(`popup-style${sfx}.png`, { tab: "style", theme: "light", lang });
+  await shot(`popup-system${sfx}.png`, { tab: "system", theme: "light", settings: { autoHighlight: false, theme: "light" }, lang });
+}
 await browser.close();

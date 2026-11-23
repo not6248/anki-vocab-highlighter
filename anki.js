@@ -105,7 +105,7 @@ const AnkiSync = (() => {
 
   // storage split: keywords can exceed chrome.storage.sync limits
   // (8KB per item), so they live in storage.local; small prefs stay in sync.
-  const SETTING_KEYS = ["color", "textColor", "bold", "underline", "caseSensitive", "wholeWord", "inflect", "enabled", "autoHighlight", "theme", "shortcut", "ankiUrl", "ankiKey", "ankiDeck", "ankiField", "ankiMode"];
+  const SETTING_KEYS = ["color", "textColor", "bold", "underline", "caseSensitive", "wholeWord", "inflect", "enabled", "autoHighlight", "theme", "language", "shortcut", "ankiUrl", "ankiKey", "ankiDeck", "ankiField", "ankiMode"];
   const SETTING_DEFAULTS = {
     color: "#ffeb3b",
     textColor: "#000000",
@@ -117,6 +117,7 @@ const AnkiSync = (() => {
     enabled: true,
     autoHighlight: true,
     theme: "system",
+    language: "en",
     shortcut: "Alt+Shift+H",
     ankiUrl: "http://127.0.0.1:8765",
     ankiKey: "",

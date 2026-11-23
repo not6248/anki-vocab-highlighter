@@ -9,7 +9,8 @@
     "test:shortcut": "node test-shortcut.mjs",
     "test:highlight": "node test-highlight.mjs",
     "shots": "node scripts/screenshot.mjs",
-    "gif": "node scripts/demo-gif.mjs"
+    "gif": "node scripts/demo-gif.mjs",
+    "gif:th": "node scripts/demo-gif.mjs --lang=th"
   },
   "keywords": ["chrome-extension", "manifest-v3", "anki", "anki-connect", "vocabulary", "language-learning", "highlighter"],
   "repository": {
