@@ -1,9 +1,9 @@
 {
   "$schema": "https://json.schemastore.org/chrome-manifest.json",
   "manifest_version": 3,
-  "name": "Custom Keyword Highlighter",
+  "name": "Anki Vocab Highlighter",
   "version": "1.5.0",
-  "description": "Highlight คำ/ตัวอักษรที่กำหนดเองในทุกเว็บไซต์ เช่น xxx,yyy,zzz + Sync Anki via Anki-Connect",
+  "description": "Highlights words you're learning on any web page, with inflection matching and Anki sync",
   "permissions": ["storage"],
   "host_permissions": ["<all_urls>"],
   "action": {

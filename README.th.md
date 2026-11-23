@@ -8,19 +8,19 @@
 
 <div align="center">
 
-# Keyword Highlighter
+# Anki Vocab Highlighter
 
 **ไฮไลต์คำที่กำลังเรียน ตรงบนหน้าที่คุณอ่าน**
 
-ส่วนขยาย Chrome สำหรับคนเรียนภาษา นักอ่าน และสาย Anki<br />
-ปรับสีได้ตามใจ แยกโหมดอัตโนมัติกับ manual และมี dark mode ในตัว
+A Chrome extension to highlight vocabulary you're learning on any web page — built for language learning with Anki sync.<br />
+ส่วนขยาย Chrome สำหรับคนเรียนภาษา นักอ่าน และสาย Anki ปรับสีได้ตามใจ แยกโหมดอัตโนมัติกับ manual และมี dark mode ในตัว
+
+<img src="docs/demo.gif" width="720" alt="Demo: พิมพ์ run, cry, error code แล้วกด Save & Highlight ทำให้ running, cried ติดไฮไลต์ และ error code ถูกจับทั้งวลี" />
 
 [![Manifest V3](https://img.shields.io/badge/Manifest-V3-1e2430?style=flat-square)](https://developer.chrome.com/docs/extensions/develop/migrate/what-is-mv3)
 [![Chrome](https://img.shields.io/badge/Chrome-Extension-ffe14d?style=flat-square&labelColor=1e2430)](https://www.google.com/chrome/)
 [![Anki-Connect](https://img.shields.io/badge/Anki--Connect-supported-2255cc?style=flat-square)](https://foosoft.net/projects/anki-connect)
 [![License](https://img.shields.io/badge/License-ISC-5b6478?style=flat-square)](LICENSE)
-
-<img src="docs/highlight-demo.png" width="720" alt="ตัวอย่างไฮไลต์คำบนหน้าเว็บจริง" />
 
 <sub>พิมพ์คำครั้งเดียว — <code>run</code> โดนทั้ง <code>running</code>, <code>cry</code> โดนทั้ง <code>cries / cried</code>, <code>error code</code> ชนะ <code>error</code> ตัวเดี่ยว</sub>
 
@@ -71,13 +71,13 @@
 
 1. Clone หรือดาวน์โหลดโปรเจกต์:
    ```bash
-   git clone https://github.com/not6248/chrome-highlight-extension.git
-   cd chrome-highlight-extension
+   git clone https://github.com/not6248/anki-vocab-highlighter.git
+   cd anki-vocab-highlighter
    ```
    หรือกด **Code → Download ZIP** บน GitHub แล้วแตกไฟล์
 2. เปิด `chrome://extensions` ใน Chrome / Edge / Brave
 3. เปิด **Developer mode** ที่มุมขวาบน
-4. กด **Load unpacked** แล้วเลือกโฟลเดอร์ `chrome-highlight-extension`
+4. กด **Load unpacked** แล้วเลือกโฟลเดอร์ `anki-vocab-highlighter`
 5. ปักหมุดไอคอนส่วนขยายไว้บน toolbar เพื่อเปิด popup ได้เร็ว
 6. เปิดเว็บอะไรก็ได้ กด `Alt + Shift + H` ถ้าเห็นแถบเหลือง = ติดตั้งสำเร็จ
 
@@ -86,7 +86,7 @@
 ### วิธีที่ 2 — โหลด ZIP จาก Releases (ไม่ต้องใช้ git)
 
 1. ไปที่หน้า **Releases** ของ repo นี้
-2. ดาวน์โหลด `chrome-highlight-extension-vX.Y.Z.zip` แตกไฟล์
+2. ดาวน์โหลด `anki-vocab-highlighter-vX.Y.Z.zip` แตกไฟล์
 3. ทำขั้นตอน 2–5 ของวิธีที่ 1 เหมือนเดิม
 
 > อยากแจกให้เพื่อน: ส่งไฟล์ zip ที่สร้างจากหัวข้อ [แพ็กเป็น ZIP](#แพ็กเป็น-zip-แจกหรือส่ง-store) ให้เพื่อนทำตามวิธีนี้ได้เลย
@@ -105,7 +105,7 @@
    highlight, error code, run, leaf
    ```
 3. กด **บันทึก & Highlight**
-4. เปิดเว็บอะไรก็ได้ แล้วดูผลตามภาพ `docs/highlight-demo.png` ด้านบน
+4. เปิดเว็บอะไรก็ได้ แล้วดูผลตามภาพ `docs/demo.gif` ด้านบน (ดู `docs/highlight-demo.png` เพิ่มในหัวข้อภาพหน้าจอ)
 
 > [!TIP]
 > ถ้าอยากได้คำจาก Anki ไปที่แท็บ **ระบบ & Anki** กรอก URL แล้วกด **Sync Anki** คำจะถูก merge เข้า list ให้อัตโนมัติ
@@ -179,7 +179,7 @@ npm run shots      # สร้างภาพ popup ใหม่ลง docs/
 
 ```bash
 # จาก root ของโปรเจกต์
-zip -r chrome-highlight-extension-v1.5.0.zip . \
+zip -r anki-vocab-highlighter-v1.5.0.zip . \
   -x "node_modules/*" ".git/*" "docs/*" "*.log" ".DS_Store"
 ```
 
@@ -192,9 +192,12 @@ zip -r chrome-highlight-extension-v1.5.0.zip . \
 ```bash
 npm run shots
 # ได้ docs/popup-light.png, popup-dark.png, popup-style.png, popup-system.png
+npm run gif
+# ได้ docs/demo.gif (780px, 10fps, วนซ้ำไม่จำกัด) ผ่าน scripts/demo-gif.mjs + ffmpeg
 ```
 
 ภาพ `docs/highlight-demo.png` สร้างจาก pipeline จริง (`parseKeywords → expandKeywords → buildHighlightRegex` จาก `highlight.js`) แล้วฉีดลงหน้าเว็บตัวอย่าง — ถ้าแก้ตรรกะการจับคู่ ควรรันเทสต์ + ถ่ายภาพใหม่เสมอ
+ภาพ `docs/demo.gif` ใช้ pipeline เดียวกัน: เปิด `test-page.html` พิมพ์ `run, cry, error code` กด Save & Highlight (โดนทั้ง `running`, `cried`) และโชว์ว่า `error code` ถูกจับทั้งวลี
 
 ---
 
@@ -230,7 +233,7 @@ error code  → จับทั้งวลีก่อนคำเดี่ย�
 ## โครงสร้างโปรเจกต์
 
 ```
-chrome-highlight-extension/
+anki-vocab-highlighter/
 ├── manifest.json        # MV3, permissions: storage + <all_urls>
 ├── popup.html           # UI 3 แท็บ + ธีม light/dark
 ├── popup.js             # โหลด/บันทึกค่า, สลับแท็บ, sync Anki
@@ -243,6 +246,7 @@ chrome-highlight-extension/
 ├── scripts/screenshot.mjs
 ├── test-page.html       # หน้าเว็บสำหรับเทสต์
 └── docs/                # ภาพประกอบ README
+    ├── demo.gif
     ├── highlight-demo.png
     ├── popup-light.png
     ├── popup-dark.png

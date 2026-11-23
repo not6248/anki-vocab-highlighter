@@ -1,16 +1,25 @@
 {
-  "name": "chrome-highlight-extension",
+  "name": "anki-vocab-highlighter",
   "version": "1.0.0",
-  "description": "Chrome Extension (Manifest V3) สำหรับ highlight คำที่กำหนดเองในทุกเว็บไซต์",
+  "description": "Chrome extension that highlights words you're learning on any web page, with inflection matching and Anki sync",
   "main": "content.js",
   "scripts": {
     "test": "node test-anki.mjs && node test-shortcut.mjs && node test-highlight.mjs",
     "test:anki": "node test-anki.mjs",
     "test:shortcut": "node test-shortcut.mjs",
     "test:highlight": "node test-highlight.mjs",
-    "shots": "node scripts/screenshot.mjs"
+    "shots": "node scripts/screenshot.mjs",
+    "gif": "node scripts/demo-gif.mjs"
   },
-  "keywords": [],
+  "keywords": ["chrome-extension", "manifest-v3", "anki", "anki-connect", "vocabulary", "language-learning", "highlighter"],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/not6248/anki-vocab-highlighter.git"
+  },
+  "bugs": {
+    "url": "https://github.com/not6248/anki-vocab-highlighter/issues"
+  },
+  "homepage": "https://github.com/not6248/anki-vocab-highlighter#readme",
   "author": "",
   "license": "ISC",
   "dependencies": {
