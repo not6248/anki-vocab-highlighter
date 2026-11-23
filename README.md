@@ -20,7 +20,7 @@ Customizable colors, auto vs. manual modes, and built-in dark mode.
 [![Manifest V3](https://img.shields.io/badge/Manifest-V3-1e2430?style=flat-square)](https://developer.chrome.com/docs/extensions/develop/migrate/what-is-mv3)
 [![Chrome](https://img.shields.io/badge/Chrome-Extension-ffe14d?style=flat-square&labelColor=1e2430)](https://www.google.com/chrome/)
 [![Anki-Connect](https://img.shields.io/badge/Anki--Connect-supported-2255cc?style=flat-square)](https://foosoft.net/projects/anki-connect)
-[![License](https://img.shields.io/badge/License-ISC-5b6478?style=flat-square)](LICENSE)
+[![License](https://img.shields.io/badge/License-MIT-5b6478?style=flat-square)](LICENSE)
 
 <sub>Type a word once — <code>run</code> matches <code>running</code>, <code>cry</code> matches <code>cries / cried</code>, <code>error code</code> wins over bare <code>error</code></sub>
 
@@ -287,4 +287,4 @@ anki-vocab-highlighter/
 
 ## License
 
-ISC — see [LICENSE](LICENSE) for details.
+MIT — see [LICENSE](LICENSE) for details.

@@ -20,7 +20,7 @@ A Chrome extension to highlight vocabulary you're learning on any web page — b
 [![Manifest V3](https://img.shields.io/badge/Manifest-V3-1e2430?style=flat-square)](https://developer.chrome.com/docs/extensions/develop/migrate/what-is-mv3)
 [![Chrome](https://img.shields.io/badge/Chrome-Extension-ffe14d?style=flat-square&labelColor=1e2430)](https://www.google.com/chrome/)
 [![Anki-Connect](https://img.shields.io/badge/Anki--Connect-supported-2255cc?style=flat-square)](https://foosoft.net/projects/anki-connect)
-[![License](https://img.shields.io/badge/License-ISC-5b6478?style=flat-square)](LICENSE)
+[![License](https://img.shields.io/badge/License-MIT-5b6478?style=flat-square)](LICENSE)
 
 <sub>พิมพ์คำครั้งเดียว — <code>run</code> โดนทั้ง <code>running</code>, <code>cry</code> โดนทั้ง <code>cries / cried</code>, <code>error code</code> ชนะ <code>error</code> ตัวเดี่ยว</sub>
 
@@ -287,4 +287,4 @@ anki-vocab-highlighter/
 
 ## License
 
-ISC — ดูรายละเอียดใน [LICENSE](LICENSE)
+MIT — ดูรายละเอียดใน [LICENSE](LICENSE)
